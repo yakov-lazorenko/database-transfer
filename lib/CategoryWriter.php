@@ -44,17 +44,17 @@ class CategoryWriter extends SimpleDataWriter
     public function writeCategories()
     {
         try {
-	        foreach ($this->inputData['categories_tree'] as $parent) {
-	            $this->writeCategory($parent);
-	            $this->writeCategoryTranslations($parent);
+            foreach ($this->inputData['categories_tree'] as $parent) {
+                $this->writeCategory($parent);
+                $this->writeCategoryTranslations($parent);
 
-	        	if (isset($parent['children'])) {
-	        	    foreach ($parent['children'] as $child) {
-			            $this->writeCategory($child);
-			            $this->writeCategoryTranslations($child);
-	        	    }
-	        	}
-	        }
+                if (isset($parent['children'])) {
+                    foreach ($parent['children'] as $child) {
+                        $this->writeCategory($child);
+                        $this->writeCategoryTranslations($child);
+                    }
+                }
+            }
 
         } catch (Exception $e) {
             return false;
@@ -72,7 +72,7 @@ class CategoryWriter extends SimpleDataWriter
 
             $this->db_connection->pdo->exec('SET FOREIGN_KEY_CHECKS = 0;');
 
-	        foreach ($this->inputData['categories_tags'] as $ct) {
+            foreach ($this->inputData['categories_tags'] as $ct) {
 
                 $tag_id = $ct['tag_id'];
 
@@ -80,7 +80,7 @@ class CategoryWriter extends SimpleDataWriter
 
                 $valuesRows[] = "( $tag_id, $category_id )";
 
-	        }
+            }
 
             $valuesRows = implode(', ' , $valuesRows);
 
@@ -104,15 +104,15 @@ class CategoryWriter extends SimpleDataWriter
 
     public function writeCategory($category)
     {
-		$id = $category['id'];
-		$parent_id = $category['pid'];
-		$alias = $category['alias'];
-		$position = $category['position'];
-		$position_main = $category['position'];
-		$active = $category['active'];
+        $id = $category['id'];
+        $parent_id = $category['pid'];
+        $alias = $category['alias'];
+        $position = $category['position'];
+        $position_main = $category['position'];
+        $active = $category['active'];
 
         if ($alias == 'main-page-category'){
-        	$alias = 'home-page-tags-category';
+            $alias = 'home-page-tags-category';
         }
 
         $query = "
@@ -138,33 +138,33 @@ class CategoryWriter extends SimpleDataWriter
     public function writeCategoryTranslations($category)
     {
 
-    	if (empty($category['translations'])) {
+        if (empty($category['translations'])) {
             return null;
         }
 
-		$category_id = $category['id'];
+        $category_id = $category['id'];
 
         foreach ($category['translations'] as $locale => $t) {
             $title = $t['title'];
             $description = $t['description'];
-	        $meta_title = $t['meta_title'];
-	        $meta_keywords = $t['meta_keywords'];
-	        $meta_description = $t['meta_description'];
+            $meta_title = $t['meta_title'];
+            $meta_keywords = $t['meta_keywords'];
+            $meta_description = $t['meta_description'];
 
-	        $query = "
-	            INSERT INTO `categories_translations` ( 
-	                `category_id`, `locale`, `title`, `text_full`, 
-	                `meta_title`, `meta_keywords`, `meta_description`
-	            )
-	            VALUES (
-	                $category_id, '$locale', '$title', '$description', 
-	                '$meta_title', '$meta_keywords', '$meta_description'
-	            );
-	        ";
+            $query = "
+                INSERT INTO `categories_translations` ( 
+                    `category_id`, `locale`, `title`, `text_full`, 
+                    `meta_title`, `meta_keywords`, `meta_description`
+                )
+                VALUES (
+                    $category_id, '$locale', '$title', '$description', 
+                    '$meta_title', '$meta_keywords', '$meta_description'
+                );
+            ";
 
-	        if (!$this->db_connection->execHard($query)) {
-	            throw new Exception('error : writeCategoryTranslations()');
-	        }
+            if (!$this->db_connection->execHard($query)) {
+                throw new Exception('error : writeCategoryTranslations()');
+            }
 
         }
 

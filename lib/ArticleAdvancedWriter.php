@@ -149,7 +149,7 @@ class ArticleAdvancedWriter extends AdvancedWriter
             $valuesRows = [];
             $this->db_connection->pdo->exec('SET FOREIGN_KEY_CHECKS = 0;');
 
-	        foreach ($this->inputData['articles'] as $article) {
+            foreach ($this->inputData['articles'] as $article) {
 
                 if (!count( $article['translations'] )){
                     continue;
@@ -176,7 +176,7 @@ class ArticleAdvancedWriter extends AdvancedWriter
                     $valuesStr = implode(', ', $valuesStr);
                     $valuesRows[] = '( ' . $valuesStr . ' )';
                 } // foreach ( $article['translations'] as $translation )
-	        } // foreach ($this->inputData['articles'] as $article)
+            } // foreach ($this->inputData['articles'] as $article)
 
             $valuesRows = implode(', ' , $valuesRows);
 

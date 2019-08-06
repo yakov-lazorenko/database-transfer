@@ -20,16 +20,16 @@ class ArticleTagReader extends SimpleDataReader
 
     public function getData()
     {
-    	return [
+        return [
             'article_tag' => $this->article_tag,
-    	];
+        ];
     }
 
 
 
-	public function readArticlesTags()
-	{
-	    $rows = [];
+    public function readArticlesTags()
+    {
+        $rows = [];
 
         $rows = $this->db_connection->selectAll("
 
@@ -45,7 +45,7 @@ class ArticleTagReader extends SimpleDataReader
 
         $this->article_tag = $rows;
 
-	    return true;
-	}
+        return true;
+    }
 
 }

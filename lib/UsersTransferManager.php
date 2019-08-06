@@ -3,7 +3,7 @@
 
 class UsersTransferManager extends AdvancedTransferManager
 {
-	public $dataBlockSize = 1000;
+    public $dataBlockSize = 1000;
 
 
     public function transferCmsUsers()

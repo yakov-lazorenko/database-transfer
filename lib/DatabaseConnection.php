@@ -3,10 +3,10 @@
 
 class DatabaseConnection
 {
-	public $host = 'localhost';
-	public $database = null;
-	public $user = 'root';
-	public $password = null;
+    public $host = 'localhost';
+    public $database = null;
+    public $user = 'root';
+    public $password = null;
 
     public $pdo = null;
     public $error = null;
@@ -28,8 +28,8 @@ class DatabaseConnection
 
 
 
-	public function connect($settings)
-	{
+    public function connect($settings)
+    {
         $db = $this->database = $settings['database'];
         $host = $this->host = $settings['host'];
         $this->user = $settings['user'];
@@ -38,11 +38,11 @@ class DatabaseConnection
         $dsn = "mysql:host=$host;dbname=$db;charset=UTF8";
 
         try{
-			$this->pdo = new PDO( $dsn, $this->user, $this->password);
+            $this->pdo = new PDO( $dsn, $this->user, $this->password);
         } catch (PDOException $e) {
             $this->error = 'Подключение не удалось: ' . $e->getMessage();
             $this->pdo = null;
-        	return false;
+            return false;
         }
 
         return true;
@@ -50,10 +50,10 @@ class DatabaseConnection
 
 
 
-	public function disconnect()
-	{		
-		$this->pdo = null;
-	}
+    public function disconnect()
+    {       
+        $this->pdo = null;
+    }
 
 
 

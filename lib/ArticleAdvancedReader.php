@@ -44,9 +44,9 @@ class ArticleAdvancedReader extends AdvancedReader
 
     public function getData()
     {
-    	return [
-    	    'articles' => $this->articles,
-    	];
+        return [
+            'articles' => $this->articles,
+        ];
     }
 
 
@@ -74,12 +74,12 @@ class ArticleAdvancedReader extends AdvancedReader
 
 
 
-	public function readArticles()
-	{
+    public function readArticles()
+    {
         $offset = $this->dataOffset;
         $limit = $this->dataLimit;
 
-	    $articles = [];
+        $articles = [];
         $common_columns = $this->getOldDbArticleCommonColumnsArr();
         $translation_prefix = 't_';
 
@@ -122,8 +122,8 @@ class ArticleAdvancedReader extends AdvancedReader
         }
 
         $this->articles = $articles;
-	    return true;
-	}
+        return true;
+    }
 
 
 

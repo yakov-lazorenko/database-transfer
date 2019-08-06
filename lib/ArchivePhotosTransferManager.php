@@ -3,20 +3,20 @@
 
 class ArchivePhotosTransferManager extends AdvancedTransferManager
 {
-	public $dataTitle = 'archive photos';
+    public $dataTitle = 'archive photos';
 
-	public $dataBlockSize = 1000;
+    public $dataBlockSize = 1000;
 
     public $commonColumns = '
-		id
-		title
-		tags
-		folder
+        id
+        title
+        tags
+        folder
     ';
    
     public $quotableColumns = '
-		title
-		tags
+        title
+        tags
     ';
 
     public $timestampColumns = '';

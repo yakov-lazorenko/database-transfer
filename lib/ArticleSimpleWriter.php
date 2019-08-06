@@ -151,7 +151,7 @@ class ArticleSimpleWriter extends SimpleDataWriter
 
             $this->db_connection->pdo->exec('SET FOREIGN_KEY_CHECKS = 0;');
 
-	        foreach ($this->inputData['articles'] as $article) {
+            foreach ($this->inputData['articles'] as $article) {
 
                 if (!count( $article['translations'])){
                     continue;
@@ -193,7 +193,7 @@ class ArticleSimpleWriter extends SimpleDataWriter
 
                     $this->db_connection->pdo->exec($query);
                 } // foreach ( $article['translations'] as $translation )
-	        } // foreach ($this->inputData['articles'] as $article)
+            } // foreach ($this->inputData['articles'] as $article)
 
             $this->db_connection->pdo->exec('SET FOREIGN_KEY_CHECKS = 1;');
 
@@ -211,7 +211,7 @@ class ArticleSimpleWriter extends SimpleDataWriter
         try {
             $this->db_connection->pdo->exec('SET FOREIGN_KEY_CHECKS = 0;');
 
-	        foreach ($this->inputData['articles_tags'] as $at) {
+            foreach ($this->inputData['articles_tags'] as $at) {
                 $tag_id = $at['tag_id'];
                 $article_id = $at['article_id'];
 
@@ -225,7 +225,7 @@ class ArticleSimpleWriter extends SimpleDataWriter
                 ";
 
                 $this->db_connection->pdo->exec($query);                
-	        }
+            }
 
             $this->db_connection->pdo->exec('SET FOREIGN_KEY_CHECKS = 1;');
 

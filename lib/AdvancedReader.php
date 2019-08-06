@@ -5,8 +5,8 @@ class AdvancedReader implements DataReader
 {
     use ConsoleEcho;
 
-	const LANG_RU = 1;
-	const LANG_UK = 2;
+    const LANG_RU = 1;
+    const LANG_UK = 2;
 
     // если есть многоязычность, то значение этой переменной должно быть true
     public $withTranslations = true;

@@ -12,7 +12,7 @@ class Config
     public static function get($param)
     {
         if (!isset(self::$data[ $param ])) {
-        	return null;
+            return null;
         }
 
         return self::$data[ $param ];

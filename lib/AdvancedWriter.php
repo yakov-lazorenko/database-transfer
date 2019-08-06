@@ -56,10 +56,10 @@ class AdvancedWriter implements DataWriter
 
     public function run()
     {
-		if (!$this->writeData()) {
-		    $this->_echo( "fail : writeData()" );
+        if (!$this->writeData()) {
+            $this->_echo( "fail : writeData()" );
             return false;
-		}
+        }
 
         return true;
     }
@@ -68,7 +68,7 @@ class AdvancedWriter implements DataWriter
 
     public function setInputData($data)
     {
-    	$this->inputData = $data;
+        $this->inputData = $data;
     }
 
 

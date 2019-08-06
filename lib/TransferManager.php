@@ -2,6 +2,6 @@
 
 interface TransferManager
 {
-	public function init();
-	public function transfer();
+    public function init();
+    public function transfer();
 }

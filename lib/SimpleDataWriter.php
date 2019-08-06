@@ -27,18 +27,18 @@ abstract class SimpleDataWriter implements DataWriter
         if (!$this->db_connection->connect( $this->settings )) {
 
             $this->_echo($this->db_connection->error);
-        	return false;
+            return false;
         }
 
         if (!$this->truncateTables()) {
-		    $this->_echo("fail : truncateTables()");
+            $this->_echo("fail : truncateTables()");
             return false;
         }
 
-		if (!$this->writeData()) {
-		    $this->_echo("fail : writeCategories()");
+        if (!$this->writeData()) {
+            $this->_echo("fail : writeCategories()");
             return false;
-		}
+        }
 
         $this->db_connection->disconnect();
 
@@ -49,7 +49,7 @@ abstract class SimpleDataWriter implements DataWriter
 
     public function setInputData($data)
     {
-    	$this->inputData = $data;
+        $this->inputData = $data;
     }
 
 

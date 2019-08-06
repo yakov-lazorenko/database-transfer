@@ -26,16 +26,16 @@ class TagReader extends SimpleDataReader
 
     public function getData()
     {
-    	return [
+        return [
             'tags' => $this->tags,
-    	];
+        ];
     }
 
 
 
-	public function readTags()
-	{
-	    $rows = [];
+    public function readTags()
+    {
+        $rows = [];
         $translatable_columns = $this->getTranslatableColumnsArr();
         $translation_prefix = 't_';
 
@@ -79,8 +79,8 @@ class TagReader extends SimpleDataReader
         }
 
         $this->tags = $rows;
-	    return true;
-	}
+        return true;
+    }
 
 
 

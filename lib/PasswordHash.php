@@ -4,7 +4,7 @@
 class PasswordHash
 {
 
-	public static function makeHash($value)
+    public static function makeHash($value)
     {
         return password_hash($value, PASSWORD_BCRYPT, ['cost' => 10]);
     }

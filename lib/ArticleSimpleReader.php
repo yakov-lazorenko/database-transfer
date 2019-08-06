@@ -50,17 +50,17 @@ class ArticleSimpleReader extends SimpleDataReader
 
     public function getData()
     {
-    	return [
-    	    'articles' => $this->articles,
+        return [
+            'articles' => $this->articles,
             'articles_tags' => $this->articlesTags,
-    	];
+        ];
     }
 
 
 
-	public function readArticles()
-	{
-	    $articles = [];
+    public function readArticles()
+    {
+        $articles = [];
         $common_columns = $this->getOldDbArticleCommonColumnsArr();
         $translation_prefix = 't_';
 
@@ -101,13 +101,13 @@ class ArticleSimpleReader extends SimpleDataReader
         }
 
         $this->articles = $articles;
-	    return true;
-	}
+        return true;
+    }
 
 
 
-	public function readArticlesTags()
-	{
+    public function readArticlesTags()
+    {
         $rows = $this->db_connection->selectAll("
 
             SELECT DISTINCT `tag_id`, `article_id`
@@ -122,8 +122,8 @@ class ArticleSimpleReader extends SimpleDataReader
 
         $this->articlesTags = $rows;
 
-	    return true;
-	}
+        return true;
+    }
 
 
 

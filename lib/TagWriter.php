@@ -112,7 +112,7 @@ class TagWriter extends SimpleDataWriter
             $valuesRows = [];
             $this->db_connection->pdo->exec('SET FOREIGN_KEY_CHECKS = 0;');
 
-	        foreach ($this->inputData['tags'] as $row) {
+            foreach ($this->inputData['tags'] as $row) {
                 if (!count( $row['translations'])){
                     continue;
                 }
@@ -130,7 +130,7 @@ class TagWriter extends SimpleDataWriter
                     $valuesStr = implode(', ', $valuesStr);
                     $valuesRows[] = '( ' . $valuesStr . ' )';
                 } // foreach ( $row['translations'] as $translation ) {
-	        } // foreach ($this->inputData['tags'] as $row) {
+            } // foreach ($this->inputData['tags'] as $row) {
 
             $valuesRows = implode( ', ' , $valuesRows);
 

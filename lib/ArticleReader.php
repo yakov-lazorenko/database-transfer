@@ -3,5 +3,5 @@
 
 class ArticleReader extends ArticleAdvancedReader
 {
-	//
+    //
 }
