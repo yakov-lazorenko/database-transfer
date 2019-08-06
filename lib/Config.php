@@ -1,5 +1,6 @@
 <?php
 
+
 class Config
 {
 
@@ -8,28 +9,19 @@ class Config
     ];
 
 
-
-
     public static function get($param)
     {
-
-        if ( ! isset( self::$data[ $param ] ) ){
-
+        if (!isset(self::$data[ $param ])) {
         	return null;
-
         }
 
         return self::$data[ $param ];
-
     }
-
-
 
 
     public static function set($param, $value)
     {
         self::$data[ $param ] = $value;
     }
-
 
 }

@@ -1,14 +1,11 @@
 <?php
 
 
-
 class GalleryReader extends AdvancedReader
 {
-
     // settings for old DB :
 
     public $entityTableName = 'gallery';
-
     public $entityTranslationTableName = 'gallery_translate';
 
     public $translatableColumns = [
@@ -20,11 +17,6 @@ class GalleryReader extends AdvancedReader
     // entity id column name in translation table in old DB
     public $entityIdColumnName = 'gallery_id';
 
-
- 
-
-
-
     // prepare data from QSL SELECT query (in old DB)
     // to writing in NEW DB
     // массив данных на выходе должен содержать элементы с ключами, 
@@ -32,11 +24,8 @@ class GalleryReader extends AdvancedReader
     public function prepareEntityData($data)
     {
         $translatableColumns = array_merge( $this->translatableColumns, ['created_at'] );
-
         $renamedColumns = [ 'description' => 'text_full' ];
-
         $entity['id'] = $data['id'];
-
         $data['created_at'] = time();
         $data[ $this->translation_prefix . 'created_at'] = $data['created_at'];
 
@@ -44,11 +33,6 @@ class GalleryReader extends AdvancedReader
             $this->prepareEntityTranslations($data, $translatableColumns, $renamedColumns);
 
         return $entity;
-
     }
-
-
-
-
 
 }

@@ -1,16 +1,12 @@
 <?php
 
 
-
 class ContestsWriter extends AdvancedWriter
 {
-
     // settings for NEW DB :
 
     public $entityTableName = 'contests';
-
     public $entityTranslationTableName = 'contests_translations';
-
     public $entityTableAllColumns = [ 'id', 'date_start', 'date_end' ];
 
     // in translation table
@@ -26,7 +22,5 @@ class ContestsWriter extends AdvancedWriter
 
     // entity id column name in translation table in NEW DB
     public $entityIdColumnName = 'contest_id';
-
-
 
 }

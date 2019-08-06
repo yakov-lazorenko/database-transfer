@@ -3,7 +3,6 @@
 
 class DatabaseConnection
 {
-
 	public $host = 'localhost';
 	public $database = null;
 	public $user = 'root';
@@ -15,27 +14,22 @@ class DatabaseConnection
 
     function __construct( $settings = null )
     {
-
-        if ( $settings ) $this->connect($settings);
-
+        if ($settings) {
+            $this->connect($settings);
+        }
     }
-
 
 
 
     function __destruct()
     {
-
         $this->disconnect();
-
     }
-
 
 
 
 	public function connect($settings)
 	{
-
         $db = $this->database = $settings['database'];
         $host = $this->host = $settings['host'];
         $this->user = $settings['user'];
@@ -44,50 +38,33 @@ class DatabaseConnection
         $dsn = "mysql:host=$host;dbname=$db;charset=UTF8";
 
         try{
-
 			$this->pdo = new PDO( $dsn, $this->user, $this->password);
-
-        } catch ( PDOException $e ) {
-
+        } catch (PDOException $e) {
             $this->error = 'Подключение не удалось: ' . $e->getMessage();
             $this->pdo = null;
         	return false;
-
         }
 
         return true;
     }
-
-
-
-
-
 
 
 
 	public function disconnect()
 	{		
-
 		$this->pdo = null;
-
 	}
-
 
 
 
     public function exec($query)
     {
-
         try{
-
             $this->pdo->exec($query);
-
-        } catch ( PDOException $e ) {
-
+        } catch (PDOException $e) {
             $this->error = $e->getMessage();
             $this->pdo = null;
             return false;
-
         }
 
         return true;
@@ -95,10 +72,8 @@ class DatabaseConnection
 
 
 
-
     public function execHard($query)
     {
-
         $begin = "
             SET FOREIGN_KEY_CHECKS = 0;
             SET AUTOCOMMIT = 0;
@@ -111,17 +86,12 @@ class DatabaseConnection
             SET AUTOCOMMIT = 1 ;
         ";
 
-
         try{
-
-            $this->pdo->exec( $begin . $query . $end );
-
-        } catch ( PDOException $e ) {
-
+            $this->pdo->exec($begin . $query . $end);
+        } catch (PDOException $e) {
             $this->error = $e->getMessage();
             $this->pdo = null;
             return false;
-
         }
 
         return true;
@@ -129,21 +99,15 @@ class DatabaseConnection
 
 
 
-
     public function selectAll($query)
     {
-
         try{
-
             $stmt = $this->pdo->query($query);
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        } catch ( PDOException $e ) {
-
+        } catch (PDOException $e) {
             $this->error = $e->getMessage();
             $this->pdo = null;
             return null;
-
         }
 
         return $result;
@@ -151,14 +115,9 @@ class DatabaseConnection
 
 
 
-
     public function lastInsertId()
     {
-
         return $this->pdo->lastInsertId();
-
     }
-    
-
 
 }

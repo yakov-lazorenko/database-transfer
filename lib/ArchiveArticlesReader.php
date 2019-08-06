@@ -1,19 +1,11 @@
 <?php
 
 
-
 class ArchiveArticlesReader extends AdvancedReader
 {
-
     // settings for old DB :
-
     public $withTranslations = false;
-
     public $entityTableName = 'articles';
-
-
-
-
 
 
     public function prepareEntityData($data)
@@ -32,9 +24,5 @@ class ArchiveArticlesReader extends AdvancedReader
 
         return $data;
     }
-
-
-
-
 
 }

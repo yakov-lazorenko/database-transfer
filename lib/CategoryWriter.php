@@ -1,44 +1,27 @@
 <?php
 
 
-
 class CategoryWriter extends SimpleDataWriter
 {
 
     public function writeData()
     {
-
-        if ( ! $this->writeCategories() ) {
-
+        if (!$this->writeCategories()) {
             $this->_echo("fail : writeCategories()");
-
             return false;
         }
 
-
-
-        if ( ! $this->writeCategoriesTags() ) {
-
+        if (!$this->writeCategoriesTags()) {
             $this->_echo("fail : writeCategoriesTags()");
-
             return false;
-
         }
-
 
         return true;
-
     }
-
-
-
-
-
 
 
     public function truncateTables()
     {
-
         $query = "
         SET FOREIGN_KEY_CHECKS = 0;
         SET AUTOCOMMIT = 0;
@@ -54,60 +37,37 @@ class CategoryWriter extends SimpleDataWriter
         ";
 
         return $this->db_connection->exec($query);
-
     }
-
-
-
-
-
 
 
 
     public function writeCategories()
     {
-
         try {
-
-
 	        foreach ($this->inputData['categories_tree'] as $parent) {
-
 	            $this->writeCategory($parent);
 	            $this->writeCategoryTranslations($parent);
 
-	        	if ( isset($parent['children']) ) {
-
+	        	if (isset($parent['children'])) {
 	        	    foreach ($parent['children'] as $child) {
-
 			            $this->writeCategory($child);
 			            $this->writeCategoryTranslations($child);
-
 	        	    }
-
 	        	}
 	        }
 
-
-        } catch ( Exception $e ){
-
+        } catch (Exception $e) {
             return false;
-
         }
 
         return true;
-
     }
-
-
-
 
 
 
     public function writeCategoriesTags()
     {
-
         try {
-
             $valuesRows = [];
 
             $this->db_connection->pdo->exec('SET FOREIGN_KEY_CHECKS = 0;');
@@ -122,7 +82,7 @@ class CategoryWriter extends SimpleDataWriter
 
 	        }
 
-            $valuesRows = implode( ', ' , $valuesRows );
+            $valuesRows = implode(', ' , $valuesRows);
 
             $query = "
                 INSERT INTO `category_tag` (
@@ -132,27 +92,18 @@ class CategoryWriter extends SimpleDataWriter
             ";
 
             $this->db_connection->pdo->exec($query);
-
             $this->db_connection->pdo->exec('SET FOREIGN_KEY_CHECKS = 1;');
-
-        } catch ( Exception $e ){
-
+        } catch (Exception $e) {
             return false;
-
         }
 
         return true;
-
     }
-
-
-
 
 
 
     public function writeCategory($category)
     {
-
 		$id = $category['id'];
 		$parent_id = $category['pid'];
 		$alias = $category['alias'];
@@ -160,7 +111,7 @@ class CategoryWriter extends SimpleDataWriter
 		$position_main = $category['position'];
 		$active = $category['active'];
 
-        if ( $alias == 'main-page-category'	){
+        if ($alias == 'main-page-category'){
         	$alias = 'home-page-tags-category';
         }
 
@@ -175,31 +126,25 @@ class CategoryWriter extends SimpleDataWriter
             );
         ";
 
-        if ( ! $this->db_connection->execHard($query) ){
-
+        if (!$this->db_connection->execHard($query)){
             throw new Exception('error : writeCategory()');
-
         }
 
         return $this->db_connection->lastInsertId();
-
     }
-
-
-
 
 
 
     public function writeCategoryTranslations($category)
     {
 
-    	if ( empty ( $category['translations'] ) ) return null;
+    	if (empty($category['translations'])) {
+            return null;
+        }
 
 		$category_id = $category['id'];
 
-
-        foreach( $category['translations'] as $locale => $t){
-
+        foreach ($category['translations'] as $locale => $t) {
             $title = $t['title'];
             $description = $t['description'];
 	        $meta_title = $t['meta_title'];
@@ -217,26 +162,19 @@ class CategoryWriter extends SimpleDataWriter
 	            );
 	        ";
 
-	        if ( ! $this->db_connection->execHard($query) ){
-
+	        if (!$this->db_connection->execHard($query)) {
 	            throw new Exception('error : writeCategoryTranslations()');
-
 	        }
 
         }
 
         return $this->db_connection->lastInsertId();
-
     }
-
-
-
 
 
 
     public function writeCategoryTag($category_tag)
     {
-
         $tag_id = $category_tag['tag_id'];
         $category_id = $category_tag['category_id'];
 
@@ -249,20 +187,12 @@ class CategoryWriter extends SimpleDataWriter
             );
         ";
 
-        if ( ! $this->db_connection->execHard($query) ){
-
+        if (!$this->db_connection->execHard($query)) {
             throw new Exception('error : writeCategoryTranslations()');
-
         }
 
         return $this->db_connection->lastInsertId();
-
     }
 
 
-
-
-
-
 }
-

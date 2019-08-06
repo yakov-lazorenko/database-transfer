@@ -1,12 +1,10 @@
 <?php
 
 
-
 // этот класс читает статьи со старой базы (со старого сайта)
 // и связи статей с тэгами
 class ArticleSimpleReader extends SimpleDataReader
 {
-
     public $articles = null;
     public $articlesTags = null;
 
@@ -33,29 +31,20 @@ class ArticleSimpleReader extends SimpleDataReader
     ';
 
 
-
     public function readData()
     {
-
-        if ( ! $this->readArticles() ) {
-
+        if (!$this->readArticles()) {
             $this->_echo("fail : readArticles()");
-
             return false;
         }
 
-        if ( ! $this->readArticlesTags() ) {
-
+        if (!$this->readArticlesTags()) {
             $this->_echo("fail : readArticlesTags()");
-
             return false;
         }
 
         return true;
-
     }
-
-
 
 
 
@@ -69,22 +58,13 @@ class ArticleSimpleReader extends SimpleDataReader
 
 
 
-
-
-
-
-
-
-
 	public function readArticles()
 	{
-
 	    $articles = [];
         $common_columns = $this->getOldDbArticleCommonColumnsArr();
         $translation_prefix = 't_';
 
         foreach ($common_columns as $value) {
-
             $columns_str[]  =
                 '`a`.'. '`' . $value . '` AS `' . $value . '`';
 
@@ -96,7 +76,6 @@ class ArticleSimpleReader extends SimpleDataReader
         $columns_str = implode(', ', $columns_str);
 
         try {
-
             $stmt = $this->db_connection->pdo->query("
 
                 SELECT
@@ -114,32 +93,21 @@ class ArticleSimpleReader extends SimpleDataReader
             ");
 
             while ( $row = $stmt->fetch(PDO::FETCH_ASSOC) ) {
-
                 $articles[] = $this->prepareInputData($row);
-
             }
 
-
-        } catch ( PDOException $e ) {
-
+        } catch (PDOException $e) {
             return false;
-
         }
 
         $this->articles = $articles;
-
 	    return true;
-
 	}
-
-
-
 
 
 
 	public function readArticlesTags()
 	{
-
         $rows = $this->db_connection->selectAll("
 
             SELECT DISTINCT `tag_id`, `article_id`
@@ -148,21 +116,19 @@ class ArticleSimpleReader extends SimpleDataReader
 
         ");
 
-        if ( $rows === NULL ) return false;
+        if ( $rows === null ) {
+            return false;
+        }
 
         $this->articlesTags = $rows;
 
 	    return true;
-
 	}
-
-
 
 
 
     public function prepareInputData($row)
     {
-
         $article['id'] = $row['id'];
         $article['category_id'] = $row['category_id'];
         $article['photo_article_id'] = $row['avatar_id'];
@@ -176,50 +142,32 @@ class ArticleSimpleReader extends SimpleDataReader
         $translations[ $locale ]['locale'] = $locale;
 
         foreach ($translatable_columns as $column) {
-
             if ( $column == 'avatar_title'){
-
                 $translations[ $locale ][ 'photo_title' ] = $row[ $column ];
-
             } else {
-
                 $translations[ $locale ][ $column ] = $row[ $column ];
-
             }
-
         }
 
-        if ( isset( $row['t_language_id'] ) && 
-            ( $row['t_language_id'] != $row['language_id'] ) ) {
-
+        if (isset( $row['t_language_id'] ) && 
+           ( $row['t_language_id'] != $row['language_id'] )
+        ) {
             $locale = $this->localeCode[ $row['t_language_id'] ];
             $translations[ $locale ]['locale'] = $locale;
 
             foreach ($translatable_columns as $column) {
-
-                if ( $column == 'avatar_title'){
-
+                if ( $column == 'avatar_title') {
                     $translations[ $locale ][ 'photo_title' ] = $row[ $translation_prefix . $column ];
-
                 } else {
-
                     $translations[ $locale ][ $column ] = $row[ $translation_prefix . $column ];
-
                 }
-
             }
-
         }
 
         $article['translations'] = $translations;
 
         return $article;
-
     }
-
-
-
-
 
 
 
@@ -227,26 +175,18 @@ class ArticleSimpleReader extends SimpleDataReader
     // in old DB
     public function getOldDbArticleCommonColumnsArr()
     {
-
         $common_columns = preg_replace("/[[:space:]]+/", ' ', $this->oldDbArticleCommonColumns);
 
         return explode(' ', trim($common_columns) );
-
     }
-
 
 
 
     public function getTranslatableColumnsArr()
     {
-
         $columns = preg_replace("/[[:space:]]+/", ' ', $this->translatableOldDbArticleColumns);
 
         return explode(' ', trim($columns) );
-
     }
 
-
-
 }
-

@@ -1,9 +1,7 @@
 <?php
 
-interface TransferManager{
-
+interface TransferManager
+{
 	public function init();
-
 	public function transfer();
-
 }

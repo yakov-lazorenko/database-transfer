@@ -1,10 +1,8 @@
 <?php
 
 
-
 class StaticPagesWriter extends AdvancedWriter
 {
-
     // settings for NEW DB :
 
     public $entityTableName = 'pages';
@@ -30,7 +28,4 @@ class StaticPagesWriter extends AdvancedWriter
     // entity id column name in translation table in NEW DB
     public $entityIdColumnName = 'page_id';
 
-
-
 }
-

@@ -1,16 +1,12 @@
 <?php
 
 
-
 class SpecialThemesWriter extends AdvancedWriter
 {
-
     // settings for NEW DB :
 
     public $entityTableName = 'special';
-
     public $entityTranslationTableName = 'special_translations';
-
     public $entityTableAllColumns = [ 'id', 'position', 'sidebar' ];
 
     // in translation table
@@ -28,7 +24,4 @@ class SpecialThemesWriter extends AdvancedWriter
     // entity id column name in translation table in NEW DB
     public $entityIdColumnName = 'special_id';
 
-
-
 }
-

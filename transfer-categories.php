@@ -9,9 +9,9 @@ $reader = new CategoryReader;
 
 $writer = new CategoryWriter;
 
-$reader->init( $old_db_config );
+$reader->init($old_db_config);
 
-$writer->init( $new_db_config );
+$writer->init($new_db_config);
 
 $manager = new SimpleTransferManager($reader, $writer);
 $manager->dataTitle = 'categories';

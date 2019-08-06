@@ -1,9 +1,7 @@
 <?php
 
-interface DataReader{
-
+interface DataReader
+{
     public function init($settings);
-
     public function run();
-
 }

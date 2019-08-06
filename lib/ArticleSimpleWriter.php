@@ -1,7 +1,6 @@
 <?php
 
 
-
 class ArticleSimpleWriter extends SimpleDataWriter
 {
 
@@ -28,76 +27,53 @@ class ArticleSimpleWriter extends SimpleDataWriter
         date_pub date_stop_slider_main date_stop_slider_category
     ';
 
+
     public function writeData()
     {
-
-
-        if ( ! $this->writeArticles() ) {
-
+        if (!$this->writeArticles()) {
             $this->_echo("fail : writeArticles()");
-
             return false;
         }
 
-
-
-        if ( ! $this->writeArticlesTranslations() ) {
-
+        if (!$this->writeArticlesTranslations()) {
             $this->_echo("fail : writeArticles()");
-
             return false;
         }
 
-
-
-        if ( ! $this->writeArticlesTags() ) {
-
+        if (!$this->writeArticlesTags()) {
             $this->_echo("fail : writeArticlesTags()");
-
             return false;
-
         }
 
         return true;
-
     }
-
-
 
 
 
     public function truncateTables()
     {
-
         $query = "
-        SET FOREIGN_KEY_CHECKS = 0;
-        SET AUTOCOMMIT = 0;
-        START TRANSACTION;
+            SET FOREIGN_KEY_CHECKS = 0;
+            SET AUTOCOMMIT = 0;
+            START TRANSACTION;
 
-        TRUNCATE `articles`;
-        TRUNCATE `articles_translations`;
-        TRUNCATE `article_tag`;
+            TRUNCATE `articles`;
+            TRUNCATE `articles_translations`;
+            TRUNCATE `article_tag`;
 
-        SET FOREIGN_KEY_CHECKS = 1;
-        COMMIT;
-        SET AUTOCOMMIT = 1 ;
+            SET FOREIGN_KEY_CHECKS = 1;
+            COMMIT;
+            SET AUTOCOMMIT = 1 ;
         ";
 
         return $this->db_connection->exec($query);
-
     }
-
-
-
 
 
 
     public function writeArticles()
     {
-
         try {
-
-
             $columnsArr = [
                 'id', 'category_id', 'photo_article_id', 
                 'special_id', 'gallery_id'
@@ -106,32 +82,27 @@ class ArticleSimpleWriter extends SimpleDataWriter
             $columnsStr = [];
 
             foreach ($columnsArr as $column) {
-
                 $columnsStr[] = "`$column`";
 
             }
 
             $columnsStr = implode(', ', $columnsStr);
-
-
             $this->db_connection->pdo->exec('SET FOREIGN_KEY_CHECKS = 0;');
 
             foreach ($this->inputData['articles'] as $article) {
 
-                if ( ! $article['special_id'] ){
+                if (!$article['special_id']){
                     $article['special_id'] = 'null';
                 }
 
-                if ( ! $article['gallery_id'] ){
+                if (!$article['gallery_id']){
                     $article['gallery_id'] = 'null';
                 }
 
                 $valuesStr = [];
 
                 foreach ($columnsArr as $column) {
-
                     $valuesStr[] = $article[ $column ];
-
                 }
 
                 $valuesStr = implode(', ', $valuesStr);
@@ -152,81 +123,60 @@ class ArticleSimpleWriter extends SimpleDataWriter
 
             $this->db_connection->pdo->exec('SET FOREIGN_KEY_CHECKS = 1;');
 
-
-        } catch ( PDOException $e ){
-
+        } catch (PDOException $e){
             return false;
-
         }
 
         return true;
-
     }
-
-
 
 
 
     public function writeArticlesTranslations()
     {
-
         $translatableColumnsArr = $this->getTranslatableColumnsArr();
         $quotableColumns = get_words_array_from_str($this->quotableTranslationColumns);
         $timestampColumns = get_words_array_from_str($this->timestampColumns);
 
         try {
-
-
             $columnsArr = array_merge(
                 ['article_id', 'locale'], $translatableColumnsArr );
-
             $columnsStr = [];
 
             foreach ($columnsArr as $column) {
-
                 $columnsStr[] = "`$column`";
-
             }
 
             $columnsStr = implode(', ', $columnsStr);
-
 
             $this->db_connection->pdo->exec('SET FOREIGN_KEY_CHECKS = 0;');
 
 	        foreach ($this->inputData['articles'] as $article) {
 
-                if ( ! count( $article['translations'] ) ){
+                if (!count( $article['translations'])){
                     continue;
                 }
 
-                foreach ( $article['translations'] as $translation ) {
+                foreach ($article['translations'] as $translation) {
 
                     $translation['article_id'] = $article['id'];
 
-                    if ( ! $translation['author_id'] ){
+                    if (!$translation['author_id']){
                         $translation['author_id'] = 'null';
                     }
 
                     $valuesStr = [];
 
                     foreach ($columnsArr as $column) {
-
                         $value = $translation[ $column ];
 
-                        if ( in_array($column, $quotableColumns) ) {
-
+                        if (in_array($column, $quotableColumns)) {
                             $valuesStr[] = $this->db_connection->pdo->quote($value);
-
-                        } elseif ( in_array($column, $timestampColumns) ) {
-
+                        } elseif (in_array($column, $timestampColumns)) {
                              $valuesStr[] = "FROM_UNIXTIME($value)";
-
                         } else {
-
                             $valuesStr[] = $value;
-
                         }
-
                     }
 
                     $valuesStr = implode(', ', $valuesStr);
@@ -242,43 +192,26 @@ class ArticleSimpleWriter extends SimpleDataWriter
                     ";
 
                     $this->db_connection->pdo->exec($query);
-
                 } // foreach ( $article['translations'] as $translation )
-
 	        } // foreach ($this->inputData['articles'] as $article)
 
             $this->db_connection->pdo->exec('SET FOREIGN_KEY_CHECKS = 1;');
 
-        } catch ( PDOException $e ){
-
+        } catch (PDOException $e){
             return false;
-
         }
 
         return true;
-
     }
-
-
-
-
-
-
-
-
-
 
 
 
     public function writeArticlesTags()
     {
-
         try {
-
             $this->db_connection->pdo->exec('SET FOREIGN_KEY_CHECKS = 0;');
 
 	        foreach ($this->inputData['articles_tags'] as $at) {
-
                 $tag_id = $at['tag_id'];
                 $article_id = $at['article_id'];
 
@@ -292,38 +225,23 @@ class ArticleSimpleWriter extends SimpleDataWriter
                 ";
 
                 $this->db_connection->pdo->exec($query);                
-
 	        }
 
             $this->db_connection->pdo->exec('SET FOREIGN_KEY_CHECKS = 1;');
 
-        } catch ( Exception $e ){
-
+        } catch (Exception $e) {
             return false;
-
         }
 
         return true;
-
     }
-
-
-
-
-
-
 
 
 
     public function getTranslatableColumnsArr()
     {
-
         $columns = preg_replace("/[[:space:]]+/", ' ', $this->translatableColumns);
-
         return explode(' ', trim($columns) );
-
     }
-
-
 
 }

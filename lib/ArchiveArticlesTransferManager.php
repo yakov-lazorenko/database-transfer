@@ -3,7 +3,6 @@
 
 class ArchiveArticlesTransferManager extends AdvancedTransferManager
 {
-
 	public $dataTitle = 'archive articles';
 
 	public $dataBlockSize = 1000;
@@ -56,10 +55,8 @@ class ArchiveArticlesTransferManager extends AdvancedTransferManager
 
 
 
-
     public function init()
     {
-
         $this->commonColumns = get_words_array_from_str($this->commonColumns);
 
         $this->quotableColumns = get_words_array_from_str($this->quotableColumns);
@@ -74,8 +71,6 @@ class ArchiveArticlesTransferManager extends AdvancedTransferManager
         $this->dataWriter->quotableColumnsInEntityTable = $this->quotableColumns;
 
         $this->dataWriter->timestampColumnsInEntityTable = $this->timestampColumns;
-
     }
-
 
 }

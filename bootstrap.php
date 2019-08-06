@@ -9,15 +9,15 @@ spl_autoload_register(function ($class_name) {
 Config::set('echo_enabled', true);
 
 $old_db_config = [
-	'database' => 'newtvoymalyshcomua',
+	'database' => 'old_database',
 	'host' => 'localhost',
 	'user' => 'root',
-	'password' => '1'
+	'password' => '123'
 ];
 
 $new_db_config = [
-	'database' => 'tvoymalysh_test',
+	'database' => 'new_database',
 	'host' => 'localhost',
 	'user' => 'root',
-	'password' => '1' 
+	'password' => '123' 
 ];

@@ -3,7 +3,6 @@
 
 class ArchivePhotosTransferManager extends AdvancedTransferManager
 {
-
 	public $dataTitle = 'archive photos';
 
 	public $dataBlockSize = 1000;
@@ -14,24 +13,16 @@ class ArchivePhotosTransferManager extends AdvancedTransferManager
 		tags
 		folder
     ';
-
-    
+   
     public $quotableColumns = '
 		title
 		tags
     ';
 
-
     public $timestampColumns = '';
-
-
-
-
-
 
     public function init()
     {
-
         $this->commonColumns = get_words_array_from_str($this->commonColumns);
 
         $this->quotableColumns = get_words_array_from_str($this->quotableColumns);
@@ -45,8 +36,6 @@ class ArchivePhotosTransferManager extends AdvancedTransferManager
         $this->dataWriter->quotableColumnsInEntityTable = $this->quotableColumns;
 
         $this->dataWriter->timestampColumnsInEntityTable = $this->timestampColumns;
-
     }
-
 
 }

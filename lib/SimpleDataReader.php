@@ -1,7 +1,6 @@
 <?php
 
 
-
 abstract class SimpleDataReader implements DataReader
 {
     use ConsoleEcho;
@@ -22,45 +21,28 @@ abstract class SimpleDataReader implements DataReader
 
     public function init($settings)
     {
-
         $this->settings = $settings;
-
     }
-
 
 
 
     public function run()
     {
-
         $this->db_connection = new DatabaseConnection;
 
-
-        if ( ! $this->db_connection->connect( $this->settings ) ){
-
+        if (!$this->db_connection->connect( $this->settings )){
         	$this->_echo( $this->db_connection->error );
-
         	return false;
-
         }
 
-
-
-        if ( ! $this->readData() ) {
-
+        if (!$this->readData()) {
             $this->_echo( "fail : readData()" );
             return false;
         }
 		
-
         $this->db_connection->disconnect();
 
-
         return true;
-
     }
-
-
-
 
 }

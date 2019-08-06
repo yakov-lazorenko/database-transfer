@@ -1,16 +1,12 @@
 <?php
 
 
-
 class GalleryWriter extends AdvancedWriter
 {
-
     // settings for NEW DB :
 
     public $entityTableName = 'galleries';
-
     public $entityTranslationTableName = 'galleries_translations';
-
     public $entityTableAllColumns = [ 'id' ];
 
     // in translation table
@@ -33,7 +29,4 @@ class GalleryWriter extends AdvancedWriter
     // entity id column name in translation table in NEW DB
     public $entityIdColumnName = 'gallery_id';
 
-
-
 }
-

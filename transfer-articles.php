@@ -9,9 +9,9 @@ $reader = new ArticleReader;
 
 $writer = new ArticleWriter;
 
-$reader->init( $old_db_config );
+$reader->init($old_db_config);
 
-$writer->init( $new_db_config );
+$writer->init($new_db_config);
 
 $manager = new ArticleAdvancedTransferManager($reader, $writer);
 

@@ -1,14 +1,11 @@
 <?php
 
 
-
 // этот класс читает статьи со старой базы (со старого сайта)
 // и связи статей с тэгами
 class ArticleAdvancedReader extends AdvancedReader
 {
-
     public $articles = null;
-
 
     // common columns for tables `article` and `article_translate`
     // in old DB
@@ -33,24 +30,15 @@ class ArticleAdvancedReader extends AdvancedReader
     ';
 
 
-
     public function readData()
-    {
-        
-        if ( ! $this->readArticles() ) {
-
+    {        
+        if (!$this->readArticles()) {
             $this->_echo("fail : readArticles()");
-
             return false;
         }
 
-
         return true;
-
     }
-
-
-
 
 
 
@@ -63,14 +51,9 @@ class ArticleAdvancedReader extends AdvancedReader
 
 
 
-
-
-
     public function getDataSize()
     {
-
         try {
-
             $stmt = $this->db_connection->pdo->query("
 
                 SELECT COUNT(*) FROM `article`
@@ -79,25 +62,20 @@ class ArticleAdvancedReader extends AdvancedReader
 
             $row = $stmt->fetch();
 
-            if ( isset ($row[0]) ) return $row[0];
-
-
-        } catch ( PDOException $e ) {
+            if (isset ($row[0])) {
+                return $row[0];
+            }
+        } catch (PDOException $e) {
             //
         }
 
         return 0;
-
     }
-
-
-
 
 
 
 	public function readArticles()
 	{
-
         $offset = $this->dataOffset;
         $limit = $this->dataLimit;
 
@@ -106,7 +84,6 @@ class ArticleAdvancedReader extends AdvancedReader
         $translation_prefix = 't_';
 
         foreach ($common_columns as $value) {
-
             $columns_str[]  =
                 '`a`.'. '`' . $value . '` AS `' . $value . '`';
 
@@ -118,7 +95,6 @@ class ArticleAdvancedReader extends AdvancedReader
         $columns_str = implode(', ', $columns_str);
 
         try {
-
             $stmt = $this->db_connection->pdo->query("
 
                 SELECT
@@ -137,32 +113,22 @@ class ArticleAdvancedReader extends AdvancedReader
 
             ");
 
-            while ( $row = $stmt->fetch(PDO::FETCH_ASSOC) ) {
-
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 $articles[] = $this->prepareInputData($row);
-
             }
 
-
-        } catch ( PDOException $e ) {
-
+        } catch (PDOException $e) {
             return false;
-
         }
 
         $this->articles = $articles;
-
 	    return true;
-
 	}
-
-
 
 
 
     public function prepareInputData($row)
     {
-
         $article['id'] = $row['id'];
         $article['category_id'] = $row['category_id'];
         $article['photo_article_id'] = $row['avatar_id'];
@@ -176,50 +142,32 @@ class ArticleAdvancedReader extends AdvancedReader
         $translations[ $locale ]['locale'] = $locale;
 
         foreach ($translatable_columns as $column) {
-
             if ( $column == 'avatar_title'){
-
                 $translations[ $locale ][ 'photo_title' ] = $row[ $column ];
-
             } else {
-
                 $translations[ $locale ][ $column ] = $row[ $column ];
-
             }
 
         }
 
-        if ( isset( $row['t_language_id'] ) && 
-            ( $row['t_language_id'] != $row['language_id'] ) ) {
-
+        if (isset( $row['t_language_id']) && 
+           ($row['t_language_id'] != $row['language_id'])
+        ) {
             $locale = $this->localeCode[ $row['t_language_id'] ];
             $translations[ $locale ]['locale'] = $locale;
 
             foreach ($translatable_columns as $column) {
-
-                if ( $column == 'avatar_title'){
-
+                if ($column == 'avatar_title') {
                     $translations[ $locale ][ 'photo_title' ] = $row[ $translation_prefix . $column ];
-
                 } else {
-
                     $translations[ $locale ][ $column ] = $row[ $translation_prefix . $column ];
-
                 }
-
             }
-
         }
 
         $article['translations'] = $translations;
-
         return $article;
-
     }
-
-
-
-
 
 
 
@@ -227,25 +175,18 @@ class ArticleAdvancedReader extends AdvancedReader
     // in old DB
     public function getOldDbArticleCommonColumnsArr()
     {
-
         $common_columns = preg_replace("/[[:space:]]+/", ' ', $this->oldDbArticleCommonColumns);
 
         return explode(' ', trim($common_columns) );
-
     }
-
 
 
 
     public function getTranslatableColumnsArr()
     {
-
         $columns = preg_replace("/[[:space:]]+/", ' ', $this->translatableOldDbArticleColumns);
-
         return explode(' ', trim($columns) );
-
     }
-
 
 
 }
